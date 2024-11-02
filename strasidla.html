@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <title>Strašidlá</title>
+    <style>
+        body {
+            background-color: #0000CD;
+            margin: 0;
+            padding: 20px;
+            height: 100vh;
+            font-family: 'Courier New', monospace;
+            color: #00FF00;
+        }
+        
+        .terminal {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        
+        #user-input {
+            background: transparent;
+            border: none;
+            color: #00FF00;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            outline: none;
+            width: 50%;
+        }
+        
+        .button {
+            background: #00FF00;
+            border: none;
+            color: black;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <div id="output">Strašidlá</div>
+        <div id="buttons" style="display: none;">
+            <button class="button" onclick="chooseDoor(1)">Dvere 1</button>
+            <button class="button" onclick="chooseDoor(2)">Dvere 2</button>
+            <button class="button" onclick="chooseDoor(3)">Dvere 3</button>
+        </div>
+        <button id="startButton" class="button" onclick="startGame()">Začať hru</button>
+    </div>
+
+    <script>
+        let score = 0;
+        let isPlaying = false;
+
+        function startGame() {
+            score = 0;
+            isPlaying = true;
+            document.getElementById('startButton').style.display = 'none';
+            document.getElementById('buttons').style.display = 'block';
+            updateOutput("Trojo dverí pred tebou...\nZa jednými je duch\nKtoré dvere otvoríš?");
+        }
+
+        function chooseDoor(doorChoice) {
+            if (!isPlaying) return;
+
+            const ghostDoor = Math.floor(Math.random() * 3) + 1;
+            
+            if (doorChoice === ghostDoor) {
+                updateOutput(`STRAŠIDLO!\nUtekaj!\nKoniec hry! Tvoje skóre je: ${score}`);
+                isPlaying = false;
+                document.getElementById('startButton').style.display = 'block';
+                document.getElementById('buttons').style.display = 'none';
+            } else {
+                score++;
+                updateOutput(`Žiadny duch!\nVstupuješ do ďalšej izby\nTvoje skóre je: ${score}\n\nTrojo dverí pred tebou...\nZa jednými je duch\nKtoré dvere otvoríš?`);
+            }
+        }
+
+        function updateOutput(text) {
+            const output = document.getElementById('output');
+            output.innerHTML = text.replace(/\n/g, '<br>');
+        }
+    </script>
+</body>
+</html> x

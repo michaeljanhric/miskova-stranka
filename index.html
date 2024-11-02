@@ -40,7 +40,7 @@
         #user-input {
             background: transparent;
             border: none;
-            color: #00FF00;
+            color: #000000;
             font-family: 'Courier New', monospace;
             font-size: 16px;
             outline: none;
@@ -53,7 +53,7 @@
         <div id="output">
             === Slovné hry od Miška ===<br>
             Dostupné hry:<br>
-            1. Hra 1<br>
+            1. Strašidlá<br>
             2. Hra 2<br>
             3. Hra 3<br><br>
             Napíš číslo hry pre začatie...<br>
@@ -75,7 +75,8 @@
                 // Handle game selection
                 switch(command) {
                     case '1':
-                        output.innerHTML += 'Spúšťam Hru 1...<br>';
+                        output.innerHTML += 'Spúšťam Strašidlá...<br>';
+                        window.location.href = 'strasidla.html';
                         break;
                     case '2':
                         output.innerHTML += 'Spúšťam Hru 2...<br>';
