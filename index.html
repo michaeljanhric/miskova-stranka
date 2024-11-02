@@ -6,13 +6,90 @@
     <title>Slovné hry od Miška</title>
     <style>
         body {
-            background-color: #0000CD; /* Tmavomodrá farba */
+            background-color: black;
             margin: 0;
-            padding: 0;
+            padding: 20px;
             height: 100vh;
+            font-family: 'Courier New', monospace;
+            color: #00FF00;
+        }
+        
+        .terminal {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            height: calc(100vh - 40px);
+            overflow-y: auto;
+        }
+        
+        .prompt::before {
+            content: "guest@wordgames:~$ ";
+            color: #00FF00;
+        }
+        
+        .menu-item {
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        
+        .menu-item:hover {
+            color: #FFFFFF;
+        }
+        
+        #user-input {
+            background: transparent;
+            border: none;
+            color: #00FF00;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            outline: none;
+            width: 50%;
         }
     </style>
 </head>
 <body>
+    <div class="terminal">
+        <div id="output">
+            === Slovné hry od Miška ===<br>
+            Dostupné hry:<br>
+            1. Hra 1<br>
+            2. Hra 2<br>
+            3. Hra 3<br><br>
+            Napíš číslo hry pre začatie...<br>
+        </div>
+        <div class="prompt">
+            <input type="text" id="user-input" autofocus>
+        </div>
+    </div>
+
+    <script>
+        const userInput = document.getElementById('user-input');
+        const output = document.getElementById('output');
+
+        userInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value;
+                output.innerHTML += `<div class="prompt">${command}</div>`;
+                
+                // Handle game selection
+                switch(command) {
+                    case '1':
+                        output.innerHTML += 'Spúšťam Hru 1...<br>';
+                        break;
+                    case '2':
+                        output.innerHTML += 'Spúšťam Hru 2...<br>';
+                        break;
+                    case '3':
+                        output.innerHTML += 'Spúšťam Hru 3...<br>';
+                        break;
+                    default:
+                        output.innerHTML += 'Neplatná voľba. Prosím, vyber číslo od 1 do 3.<br>';
+                }
+                
+                this.value = '';
+            }
+        });
+    </script>
 </body>
 </html>
