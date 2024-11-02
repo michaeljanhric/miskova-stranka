@@ -41,6 +41,11 @@
             cursor: pointer;
             font-family: 'Courier New', monospace;
         }
+        
+        .game-over {
+            color: #FF0000;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -51,7 +56,8 @@
             <button class="button" onclick="chooseDoor(2)">Dvere 2</button>
             <button class="button" onclick="chooseDoor(3)">Dvere 3</button>
         </div>
-        <button id="startButton" class="button" onclick="startGame()">Začať hru</button>
+        <button id="startButton" class="button" onclick="startGame()">Začať novú hru</button>
+        <button id="nextButton" class="button" onclick="nextLevel()" style="display: none;">Ďalšia izba</button>
     </div>
 
     <script>
@@ -62,6 +68,7 @@
             score = 0;
             isPlaying = true;
             document.getElementById('startButton').style.display = 'none';
+            document.getElementById('nextButton').style.display = 'none';
             document.getElementById('buttons').style.display = 'block';
             updateOutput("Trojo dverí pred tebou...\nZa jednými je duch\nKtoré dvere otvoríš?");
         }
@@ -72,19 +79,32 @@
             const ghostDoor = Math.floor(Math.random() * 3) + 1;
             
             if (doorChoice === ghostDoor) {
-                updateOutput(`STRAŠIDLO!\nUtekaj!\nKoniec hry! Tvoje skóre je: ${score}`);
+                updateOutput(`<span class="game-over">STRAŠIDLO!\nUtekaj!\nKoniec hry! Tvoje skóre je: ${score}</span>`);
                 isPlaying = false;
                 document.getElementById('startButton').style.display = 'block';
                 document.getElementById('buttons').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'none';
             } else {
                 score++;
-                updateOutput(`Žiadny duch!\nVstupuješ do ďalšej izby\nTvoje skóre je: ${score}\n\nTrojo dverí pred tebou...\nZa jednými je duch\nKtoré dvere otvoríš?`);
+                document.getElementById('buttons').style.display = 'none';
+                document.getElementById('nextButton').style.display = 'block';
+                updateOutput(`Prešiel si správnymi dverami.\nTvoje skóre je: ${score}`);
             }
+        }
+
+        function nextLevel() {
+            document.getElementById('nextButton').style.display = 'none';
+            document.getElementById('buttons').style.display = 'block';
+            updateOutput(`Trojo dverí pred tebou...\nZa jednými je duch\nKtoré dvere otvoríš?`);
         }
 
         function updateOutput(text) {
             const output = document.getElementById('output');
-            output.innerHTML = text.replace(/\n/g, '<br>');
+            if (text.includes('<span')) {
+                output.innerHTML = text.replace(/\n/g, '<br>');
+            } else {
+                output.innerHTML = text.replace(/\n/g, '<br>');
+            }
         }
     </script>
 </body>
