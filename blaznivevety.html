@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bláznivé vety</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #veta {
+            font-size: 24px;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generátor bláznivých viet</h1>
+    <div id="veta">Klikni na tlačidlo nižšie pre generovanie bláznivých viet.</div>
+    <button onclick="generateBlázniváVeta()">Generovať bláznivú vetu</button>
+
+    <script>
+      const meno = ["Nina", "Miloš", "Ján", "Filip", "Klára", "Mikuláš"];
+      const sloveso = ["sadí", "kope", "vraždí", "hádže", "má", "prdí"];
+      const predmet = ["auto", "záchod", "škatuľu", "štvorec", "kopec", "Milan"];
+
+        function generateBlázniváVeta() {
+            // Tu by sa dalo pridať logika pre generovanie bláznivých viet
+            document.getElementById("veta").innerHTML = meno[Math.floor(Math.random() * meno.length)] + " " + sloveso[Math.floor(Math.random() * sloveso.length)] + " " + predmet[Math.floor(Math.random() * predmet.length)] + ".";
+        }
+    </script>
+</body>
+</html> 
