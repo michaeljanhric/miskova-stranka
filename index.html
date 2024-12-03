@@ -55,7 +55,9 @@
             Dostupné hry:<br>
             1. Strašidlá<br>
             2. Bláznivé vety<br>
-            3. Hra 3<br><br>
+            3. Matematický test<br>
+            4. O výrobcovy<br>
+            5. Strategická hra<br>
             Napíš číslo hry pre začatie...<br>
         </div>
         <div class="prompt">
@@ -83,7 +85,15 @@
                         window.location.href = 'blaznivevety.html';
                         break;
                     case '3':
-                        output.innerHTML += 'Spúšťam Hru 3...<br>';
+                        output.innerHTML += 'Spúšťam Mat. test...<br>';
+                        window.location.href = 'matematika.html';
+                        break;
+                    case '4':
+                        output.innerHTML += 'Otváram profil...<br>';
+                        window.location.href = 'profilmisko.html';
+                        break;
+                    case '5':
+                        output.innerHTML += 'Nedokončené<br>';
                         break;
                     default:
                         output.innerHTML += 'Neplatná voľba. Prosím, vyber číslo od 1 do 3.<br>';
