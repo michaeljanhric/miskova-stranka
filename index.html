@@ -17,6 +17,7 @@
             4. O výrobcovy<br>
             5. Strategická hra<br>
             Napíš číslo hry pre začatie...<br>
+            P. S. Pri zvýšení rekordu v hrách napíšte email na adresu Michael Ján Hric
         </div>
         <div class="prompt">
             <input type="text" id="user-input" autofocus>
@@ -54,12 +55,15 @@
                         output.innerHTML += 'Nedokončené<br>';
                         break;
                     default:
-                        output.innerHTML += 'Neplatná voľba. Prosím, vyber číslo od 1 do 3.<br>';
+                        output.innerHTML += 'Neplatná voľba. Prosím, vyber číslo od 1 do 5.<br>';
                 }
                 
                 this.value = '';
             }
         });
     </script>
+    <style>
+        @import "style.css";
+    </style>
 </body>
 </html>

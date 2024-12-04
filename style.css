@@ -1,4 +1,11 @@
 h1 {
-    text-align: left;
-    color:
+    text-align: center;
+    color: #0dc140;
+}
+background {
+  color: rgb(103, 0, 96);
+}
+div {
+  color: rgb(125, 10, 10);
+  text-align: center;
 }
