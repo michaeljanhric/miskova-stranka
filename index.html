@@ -11,56 +11,42 @@
         <div id="output">
             === Slovné hry od Miška ===<br>
             Dostupné hry:<br>
-            1. Strašidlá<br>
-            2. Bláznivé vety<br>
-            3. Matematický test<br>
-            4. O výrobcovy<br>
-            5. Strategická hra<br>
-            Napíš číslo hry pre začatie...<br>
-            P. S. Pri zvýšení rekordu v hrách napíšte email na adresu Michael Ján Hric
         </div>
-        <div class="prompt">
-            <input type="text" id="user-input" autofocus>
+        <div class="game-buttons">
+            <button onclick="selectGame('1')">1. Strašidlá</button>
+            <button onclick="selectGame('2')">2. Bláznivé vety</button>
+            <button onclick="selectGame('3')">3. Matematický test</button>
+            <button onclick="selectGame('4')">4. O výrobcovi</button>
+            <button onclick="selectGame('5')">5. Strategická hra</button>
         </div>
     </div>
 
     <script>
-        const userInput = document.getElementById('user-input');
-        const output = document.getElementById('output');
-
-        userInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                const command = this.value;
-                output.innerHTML += `<div class="prompt">${command}</div>`;
-                
-                // Handle game selection
-                switch(command) {
-                    case '1':
-                        output.innerHTML += 'Spúšťam Strašidlá...<br>';
-                        window.location.href = 'strasidla.html';
-                        break;
-                    case '2':
-                        output.innerHTML += 'Spúšťam Bláznivé vety...<br>';
-                        window.location.href = 'blaznivevety.html';
-                        break;
-                    case '3':
-                        output.innerHTML += 'Spúšťam Mat. test...<br>';
-                        window.location.href = 'matematika.html';
-                        break;
-                    case '4':
-                        output.innerHTML += 'Otváram profil...<br>';
-                        window.location.href = 'profilmisko.html';
-                        break;
-                    case '5':
-                        output.innerHTML += 'Nedokončené<br>';
-                        break;
-                    default:
-                        output.innerHTML += 'Neplatná voľba. Prosím, vyber číslo od 1 do 5.<br>';
-                }
-                
-                this.value = '';
+        function selectGame(command) {
+            const output = document.getElementById('output');
+            
+            switch(command) {
+                case '1':
+                    output.innerHTML += 'Spúšťam Strašidlá...<br>';
+                    window.location.href = 'strasidla.html';
+                    break;
+                case '2':
+                    output.innerHTML += 'Spúšťam Bláznivé vety...<br>';
+                    window.location.href = 'blaznivevety.html';
+                    break;
+                case '3':
+                    output.innerHTML += 'Spúšťam Mat. test...<br>';
+                    window.location.href = 'matematika.html';
+                    break;
+                case '4':
+                    output.innerHTML += 'Otváram profil...<br>';
+                    window.location.href = 'profilmisko.html';
+                    break;
+                case '5':
+                    output.innerHTML += 'Nedokončené<br>';
+                    break;
             }
-        });
+        }
     </script>
     <style>
         @import "style.css";
