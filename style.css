@@ -9,3 +9,14 @@ div {
   color: rgb(125, 10, 10);
   text-align: center;
 }
+.game-buttons button {
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+.game-icon {
+    height: 30px;
+    vertical-align: middle;
+    margin-left: 10px;
+}
