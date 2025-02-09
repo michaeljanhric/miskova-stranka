@@ -9,10 +9,15 @@ div {
   color: rgb(125, 10, 10);
   text-align: center;
 }
+.game-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
 .game-buttons button {
     font-size: 18px;
     padding: 10px 20px;
-    margin: 5px;
+    margin: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
