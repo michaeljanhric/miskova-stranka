@@ -14,9 +14,11 @@ div {
     padding: 10px 20px;
     margin: 5px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .game-icon {
     height: 30px;
     vertical-align: middle;
-    margin-left: 10px;
 }
