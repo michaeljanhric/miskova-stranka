@@ -12,10 +12,6 @@
         </div>
         <div class="game-buttons">
             <button onclick="selectGame('1')">1. Strašidlá <img src="duch.png" alt="duch" class="game-icon"></button>
-            <button onclick="selectGame('2')">2. Bláznivé vety <img src="sialenec.png" alt="sialenec" class="game-icon"></button>
-            <button onclick="selectGame('3')">3. Matematický test <img src="mat.png" alt="matematika" class="game-icon"></button>
-            <button onclick="selectGame('4')">4. O výrobcovi <img src="programator.png" alt="vyrobca" class="game-icon"></button>
-            <button onclick="selectGame('5')">5. Strategická hra <img src="hra.png" alt="strategicka hra" class="game-icon"></button>
         </div>
     </div>
 
@@ -27,21 +23,6 @@
                 case '1':
                     output.innerHTML += 'Spúšťam Strašidlá...<br>';
                     window.location.href = 'strasidla.html';
-                    break;
-                case '2':
-                    output.innerHTML += 'Spúšťam Bláznivé vety...<br>';
-                    window.location.href = 'blaznivevety.html';
-                    break;
-                case '3':
-                    output.innerHTML += 'Spúšťam Mat. test...<br>';
-                    window.location.href = 'matematika.html';
-                    break;
-                case '4':
-                    output.innerHTML += 'Otváram profil...<br>';
-                    window.location.href = 'profilmisko.html';
-                    break;
-                case '5':
-                    output.innerHTML += 'Nedokončené<br>';
                     break;
             }
         }
