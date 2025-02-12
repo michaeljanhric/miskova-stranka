@@ -15,15 +15,26 @@ div {
     gap: 10px;
 }
 .game-buttons button {
-    font-size: 18px;
-    padding: 10px 20px;
-    margin: 0;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    margin: 10px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: space-between;
+    width: 300px;
+}
+.game-buttons button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
 }
 .game-icon {
-    height: 30px;
-    vertical-align: middle;
+    width: 32px;
+    height: 32px;
+    margin-left: 15px;
 }
