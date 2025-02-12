@@ -11,20 +11,14 @@
         <div id="output">
         </div>
         <div class="game-buttons">
-            <button onclick="selectGame('1')">1. Strašidlá <img src="duch.png" alt="duch" class="game-icon"></button>
+            <button onclick="selectGame('1')">Strašidlá <img src="duch.png" alt="duch" class="game-icon"></button>
         </div>
     </div>
 
     <script>
         function selectGame(command) {
             const output = document.getElementById('output');
-            
-            switch(command) {
-                case '1':
-                    output.innerHTML += 'Spúšťam Strašidlá...<br>';
-                    window.location.href = 'strasidla.html';
-                    break;
-            }
+            window.location.href = 'strasidla.html';
         }
     </script>
     <style>

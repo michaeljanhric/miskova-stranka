@@ -13,25 +13,22 @@ h1 {
 
 .game-buttons {
     display: flex;
-    flex-direction: column;
-    gap: 5px;
-    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .game-buttons button {
     background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
-    margin: 5px;
+    padding: 15px 30px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 18px;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 200px;
+    gap: 15px;
 }
 
 .game-buttons button:hover {
@@ -40,7 +37,6 @@ h1 {
 }
 
 .game-icon {
-    width: 24px;
-    height: 24px;
-    margin-left: 10px;
+    width: 32px;
+    height: 32px;
 }
