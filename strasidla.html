@@ -21,6 +21,9 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             height: calc(100vh - 40px);
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         
         #user-input {
@@ -41,6 +44,11 @@
             margin: 5px;
             cursor: pointer;
             font-family: 'Courier New', monospace;
+            display: inline-block;
+        }
+        
+        #back-button {
+            margin-top: auto;
         }
         
         .game-over {
@@ -59,7 +67,7 @@
         </div>
         <button id="startButton" class="button" onclick="startGame()">Začať novú hru</button>
         <button id="nextButton" class="button" onclick="nextLevel()" style="display: none;">Ďalšia izba</button>
-        <button class="button" onclick="window.location.href='index.html'">Späť na menu</button>
+        <button id="back-button" class="button" onclick="window.location.href='index.html'">Späť na menu</button>
     </div>
 
     <script>
@@ -110,4 +118,4 @@
         }
     </script>
 </body>
-</html> x
+</html>
