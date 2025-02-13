@@ -3,22 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hry</title>
+    <title>Miškove Hry</title>
+    <style>
+        @import "style.css";
+
+        .login-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 300px;
+            margin: 50px auto;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .login-form input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: white;
+            color: black;
+        }
+
+        #error-message {
+            color: #ff4444;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .payment-info {
+            text-align: center;
+            margin-top: 20px;
+            color: #4CAF50;
+        }
+
+        .payment-details {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .bank-details {
+            color: #FFA500;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<h1>Ponuka hier</h1>
-    <div class="terminal">
-        <div id="output">
+    <h1>Miškove Hry</h1>
+    
+    <div id="login-section" class="login-container">
+        <div class="login-form">
+            <input type="text" id="username" placeholder="Používateľské meno">
+            <input type="password" id="password" placeholder="Heslo">
+            <button class="button" onclick="login()">Prihlásiť sa</button>
+            <div id="error-message" class="hidden"></div>
         </div>
-        <div class="game-buttons">
-            <button onclick="selectGame('1')">Strašidlá <img src="duch.png" alt="duch" class="game-icon"></button>
-            <button onclick="selectGame('2')">Had <img src="snake.png" alt="had" class="game-icon"></button>
+        <div class="payment-info">
+            <p>Prístup k hrám: 1 EURO</p>
+            <div class="payment-details">
+                <p>Platbu prosím pošlite na účet:</p>
+                <p class="bank-details">SK12 3456 7890 1234 5678 9012</p>
+                <p>Do poznámky uveďte vaše používateľské meno</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-section" class="hidden">
+        <div class="terminal">
+            <div id="output"></div>
+            <div class="game-buttons">
+                <button onclick="selectGame('1')">Strašidlá <img src="duch.png" alt="duch" class="game-icon"></button>
+                <button onclick="selectGame('2')">Had <img src="snake.png" alt="had" class="game-icon"></button>
+            </div>
         </div>
     </div>
 
     <script>
+        // Prihlasovacie údaje (v reálnej aplikácii by boli na serveri)
+        const validCredentials = {
+            'misko': 'heslo123'
+        };
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+
+            if (validCredentials[username] === password) {
+                // Kontrola platby (v reálnej aplikácii by sa kontrolovalo na serveri)
+                const hasPaid = localStorage.getItem('paid_' + username);
+                
+                if (!hasPaid) {
+                    errorMessage.textContent = 'Prosím, najprv zašlite platbu a počkajte na potvrdenie';
+                    errorMessage.classList.remove('hidden');
+                    return;
+                }
+
+                // Úspešné prihlásenie
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('game-section').classList.remove('hidden');
+                localStorage.setItem('loggedIn', 'true');
+                localStorage.setItem('username', username);
+            } else {
+                // Nesprávne údaje
+                errorMessage.textContent = 'Nesprávne meno alebo heslo';
+                errorMessage.classList.remove('hidden');
+            }
+        }
+
+        // Kontrola či je používateľ prihlásený
+        window.onload = function() {
+            if (localStorage.getItem('loggedIn') === 'true') {
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('game-section').classList.remove('hidden');
+            }
+        }
+
         function selectGame(command) {
-            const output = document.getElementById('output');
             if (command === '1') {
                 window.location.href = 'strasidla.html';
             } else if (command === '2') {
@@ -26,8 +138,5 @@
             }
         }
     </script>
-    <style>
-        @import "style.css";
-    </style>
 </body>
 </html>
