@@ -61,7 +61,7 @@
 
         // game
         let gameIsRunning = true;
-        const fps = 15;
+        const fps = 10;
         const tileSize = 50;
         const tileCountX = canvas.width / tileSize;
         const tileCountY = canvas.height / tileSize;
@@ -181,7 +181,7 @@
 
             // scissors
             if (scissorsActive) {
-                rectangle("#ffff00", scissorsPosX, scissorsPosY, tileSize - 2, tileSize - 2);
+                rectangle("#FFA500", scissorsPosX, scissorsPosY, tileSize - 2, tileSize - 2);
             }
 
             // tail
