@@ -67,6 +67,12 @@
         const tileCountY = canvas.height / tileSize;
         let currentScore = 0;
 
+        // scissors
+        let scissorsPosX = -100;  // mimo obrazovky na začiatku
+        let scissorsPosY = -100;
+        let scissorsActive = false;
+        const SCISSORS_INTERVAL = 10000; // každých 10 sekúnd
+
         // player
         let snakeSpeed = tileSize;
         let snakePosX = 0;
@@ -84,8 +90,36 @@
             if (gameIsRunning) {
                 drawStuff();
                 moveStuff();
+                handleScissors();
                 setTimeout(gameLoop, 1000 / fps);
             }
+        }
+
+        function handleScissors() {
+            if (!scissorsActive && Math.random() < 0.001) { // náhodná šanca na spawn
+                spawnScissors();
+            }
+        }
+
+        function spawnScissors() {
+            scissorsActive = true;
+            scissorsPosX = Math.floor(Math.random() * tileCountX) * tileSize;
+            scissorsPosY = Math.floor(Math.random() * tileCountY) * tileSize;
+            
+            // nespawnuj na hadovi alebo jedle
+            if ((scissorsPosX === foodPosX && scissorsPosY === foodPosY) ||
+                (scissorsPosX === snakePosX && scissorsPosY === snakePosY) ||
+                tail.some(part => part.x === scissorsPosX && part.y === scissorsPosY)) {
+                spawnScissors();
+                return;
+            }
+
+            // zmizni po 5 sekundách
+            setTimeout(() => {
+                scissorsActive = false;
+                scissorsPosX = -100;
+                scissorsPosY = -100;
+            }, 5000);
         }
 
         function moveStuff() {
@@ -113,6 +147,19 @@
                 }
             });
 
+            // collision with scissors
+            if (scissorsActive && snakePosX === scissorsPosX && snakePosY === scissorsPosY) {
+                if (snakeLength > 4) {  // neskráť hada pod minimálnu dĺžku
+                    snakeLength = Math.max(4, Math.floor(snakeLength / 2));
+                    tail = tail.slice(-snakeLength);
+                    currentScore = Math.max(0, currentScore - 2); // odpočítaj 2 body
+                    score.textContent = currentScore;
+                }
+                scissorsActive = false;
+                scissorsPosX = -100;
+                scissorsPosY = -100;
+            }
+
             tail.push({ x: snakePosX, y: snakePosY });
             tail = tail.slice(-1 * snakeLength);
 
@@ -131,6 +178,11 @@
 
             // food
             rectangle("#ff0000", foodPosX, foodPosY, tileSize - 2, tileSize - 2);
+
+            // scissors
+            if (scissorsActive) {
+                rectangle("#ffff00", scissorsPosX, scissorsPosY, tileSize - 2, tileSize - 2);
+            }
 
             // tail
             tail.forEach(snakePart => 
