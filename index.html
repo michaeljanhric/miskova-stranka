@@ -12,13 +12,18 @@
         </div>
         <div class="game-buttons">
             <button onclick="selectGame('1')">Strašidlá <img src="duch.png" alt="duch" class="game-icon"></button>
+            <button onclick="selectGame('2')">Had <img src="snake.png" alt="had" class="game-icon"></button>
         </div>
     </div>
 
     <script>
         function selectGame(command) {
             const output = document.getElementById('output');
-            window.location.href = 'strasidla.html';
+            if (command === '1') {
+                window.location.href = 'strasidla.html';
+            } else if (command === '2') {
+                window.location.href = 'hadik.html';
+            }
         }
     </script>
     <style>
