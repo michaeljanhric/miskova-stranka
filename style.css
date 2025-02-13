@@ -13,8 +13,11 @@ h1 {
 
 .game-buttons {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    margin-top: 20px;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
 }
 
 .game-buttons button {
@@ -29,6 +32,7 @@ h1 {
     display: flex;
     align-items: center;
     gap: 15px;
+    min-width: 200px;
 }
 
 .game-buttons button:hover {
