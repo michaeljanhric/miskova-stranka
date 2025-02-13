@@ -24,6 +24,12 @@
             margin: 10px 0;
         }
 
+        #highscores {
+            color: #4CAF50;
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+
         .controls {
             margin-top: 20px;
         }
@@ -46,6 +52,7 @@
 <body>
     <div id="game-container">
         <div id="score">0</div>
+        <div id="highscores">Najlepšie skóre: 0</div>
         <canvas width="600" height="600"></canvas>
         <div class="controls">
             <button class="button" onclick="location.reload()">Nová hra</button>
@@ -85,6 +92,18 @@
         // food
         let foodPosX = 0;
         let foodPosY = 0;
+
+        // highscore handling
+        let highScore = localStorage.getItem('snakeHighScore') || 0;
+        document.getElementById('highscores').textContent = `Najlepšie skóre: ${highScore}`;
+
+        function updateHighScore() {
+            if (currentScore > highScore) {
+                highScore = currentScore;
+                localStorage.setItem('snakeHighScore', highScore);
+                document.getElementById('highscores').textContent = `Najlepšie skóre: ${highScore}`;
+            }
+        }
 
         function gameLoop() {
             if (gameIsRunning) {
@@ -167,6 +186,7 @@
             if (snakePosX === foodPosX && snakePosY === foodPosY) {
                 currentScore++;
                 score.textContent = currentScore;
+                updateHighScore();  // kontroluj či nie je nové najlepšie skóre
                 snakeLength++;
                 resetFood();
             }
@@ -216,6 +236,7 @@
         }
 
         function gameOver() {
+            updateHighScore();
             score.innerHTML = `☠️ ${currentScore} ☠️`;
             gameIsRunning = false;
         }
