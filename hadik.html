@@ -47,6 +47,24 @@
         .button:hover {
             background: #45a049;
         }
+
+        .color-buttons {
+            margin: 10px 0;
+        }
+
+        .color-button {
+            width: 30px;
+            height: 30px;
+            border: 2px solid white;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .color-button:hover {
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -54,6 +72,13 @@
         <div id="score">0</div>
         <div id="highscores">Najlepšie skóre: 0</div>
         <canvas width="600" height="600"></canvas>
+        <div class="color-buttons">
+            <div class="color-button" style="background: #4CAF50;" onclick="changeSnakeColor('#4CAF50', '#45a049')"></div>
+            <div class="color-button" style="background: #ff0000;" onclick="changeSnakeColor('#ff0000', '#cc0000')"></div>
+            <div class="color-button" style="background: #0000ff;" onclick="changeSnakeColor('#0000ff', '#0000cc')"></div>
+            <div class="color-button" style="background: #ff00ff;" onclick="changeSnakeColor('#ff00ff', '#cc00cc')"></div>
+            <div class="color-button" style="background: #ffff00;" onclick="changeSnakeColor('#ffff00', '#cccc00')"></div>
+        </div>
         <div class="controls">
             <button class="button" onclick="location.reload()">Nová hra</button>
             <button class="button" onclick="window.location.href='index.html'">Späť na menu</button>
@@ -84,6 +109,12 @@
         let scissorsActive = false;
         const SCISSORS_INTERVAL = 10000; // každých 10 sekúnd
 
+        // bombs
+        let bombPosX = -100;
+        let bombPosY = -100;
+        let bombActive = false;
+        const BOMB_INTERVAL = 15000; // každých 15 sekúnd
+
         // player
         let snakeSpeed = tileSize;
         let snakePosX = 0;
@@ -101,6 +132,10 @@
         let highScore = localStorage.getItem('snakeHighScore') || 0;
         document.getElementById('highscores').textContent = `Najlepšie skóre: ${highScore}`;
 
+        // snake colors
+        let snakeColor = "#ff0000";  // červená farba hada na začiatku
+        let snakeHeadColor = "#cc0000";  // tmavšia červená pre hlavu
+
         function updateHighScore() {
             if (currentScore > highScore) {
                 highScore = currentScore;
@@ -114,6 +149,7 @@
                 drawStuff();
                 moveStuff();
                 handleScissors();
+                handleBombs();
                 setTimeout(gameLoop, 1000 / fps);
             }
         }
@@ -121,6 +157,12 @@
         function handleScissors() {
             if (!scissorsActive && Math.random() < 0.02) { // zvýšená šanca na spawn z 0.001 na 0.02
                 spawnScissors();
+            }
+        }
+
+        function handleBombs() {
+            if (!bombActive && Math.random() < 0.01) { // 1% šanca na spawn bomby
+                spawnBomb();
             }
         }
 
@@ -143,6 +185,28 @@
                 scissorsPosX = -100;
                 scissorsPosY = -100;
             }, 5000);
+        }
+
+        function spawnBomb() {
+            bombActive = true;
+            bombPosX = Math.floor(Math.random() * tileCountX) * tileSize;
+            bombPosY = Math.floor(Math.random() * tileCountY) * tileSize;
+            
+            // nespawnuj na hadovi, jedle alebo nožniciach
+            if ((bombPosX === foodPosX && bombPosY === foodPosY) ||
+                (bombPosX === snakePosX && bombPosY === snakePosY) ||
+                (bombPosX === scissorsPosX && bombPosY === scissorsPosY) ||
+                tail.some(part => part.x === bombPosX && part.y === bombPosY)) {
+                spawnBomb();
+                return;
+            }
+
+            // zmizni po 7 sekundách
+            setTimeout(() => {
+                bombActive = false;
+                bombPosX = -100;
+                bombPosY = -100;
+            }, 7000);
         }
 
         function moveStuff() {
@@ -170,13 +234,16 @@
                 }
             });
 
+            // collision with bomb
+            if (bombActive && snakePosX === bombPosX && snakePosY === bombPosY) {
+                gameOver();
+            }
+
             // collision with scissors
             if (scissorsActive && snakePosX === scissorsPosX && snakePosY === scissorsPosY) {
                 if (snakeLength > 4) {  // neskráť hada pod minimálnu dĺžku
                     snakeLength = Math.max(4, Math.floor(snakeLength / 2));
                     tail = tail.slice(-snakeLength);
-                    currentScore = Math.max(0, currentScore - 2); // odpočítaj 2 body
-                    score.textContent = currentScore;
                 }
                 scissorsActive = false;
                 scissorsPosX = -100;
@@ -201,20 +268,25 @@
             rectangle("#000", 0, 0, canvas.width, canvas.height);
 
             // food
-            rectangle("#ff0000", foodPosX, foodPosY, tileSize - 2, tileSize - 2);
+            rectangle("#00ff00", foodPosX, foodPosY, tileSize - 2, tileSize - 2);  // zelené jedlo
+
+            // bomb
+            if (bombActive) {
+                rectangle("#800080", bombPosX, bombPosY, tileSize - 2, tileSize - 2);  // fialová bomba
+            }
 
             // scissors
             if (scissorsActive) {
-                rectangle("#FFA500", scissorsPosX, scissorsPosY, tileSize - 2, tileSize - 2);
+                rectangle("#FFA500", scissorsPosX, scissorsPosY, tileSize - 2, tileSize - 2);  // oranžové nožnice
             }
 
             // tail
             tail.forEach(snakePart => 
-                rectangle("#4CAF50", snakePart.x, snakePart.y, tileSize - 2, tileSize - 2)
+                rectangle(snakeColor, snakePart.x, snakePart.y, tileSize - 2, tileSize - 2)
             );
 
             // snake head
-            rectangle("#45a049", snakePosX, snakePosY, tileSize - 2, tileSize - 2);
+            rectangle(snakeHeadColor, snakePosX, snakePosY, tileSize - 2, tileSize - 2);
         }
 
         function rectangle(color, x, y, width, height) {
@@ -289,6 +361,11 @@
                 drawStuff();
             }
         });
+
+        function changeSnakeColor(bodyColor, headColor) {
+            snakeColor = bodyColor;
+            snakeHeadColor = headColor;
+        }
 
         // start game
         resetFood();
