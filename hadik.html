@@ -65,6 +65,40 @@
         .color-button:hover {
             transform: scale(1.1);
         }
+
+        .instructions {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .instructions h2 {
+            color: #4CAF50;
+            margin-top: 0;
+        }
+
+        .instructions ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .instructions li {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .color-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 10px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -78,6 +112,35 @@
             <div class="color-button" style="background: #0000ff;" onclick="changeSnakeColor('#0000ff', '#0000cc')"></div>
             <div class="color-button" style="background: #ff00ff;" onclick="changeSnakeColor('#ff00ff', '#cc00cc')"></div>
             <div class="color-button" style="background: #ffff00;" onclick="changeSnakeColor('#ffff00', '#cccc00')"></div>
+        </div>
+        <div class="instructions">
+            <h2>Pravidlá hry</h2>
+            <ul>
+                <li>
+                    <div class="color-dot" style="background: #ff0000;"></div>
+                    <strong>Had:</strong> Ovládajte pomocou kláves W (hore), S (dole), A (vľavo), D (vpravo)
+                </li>
+                <li>
+                    <div class="color-dot" style="background: #00ff00;"></div>
+                    <strong>Zelené jedlo:</strong> Zvyšuje skóre a dĺžku hada
+                </li>
+                <li>
+                    <div class="color-dot" style="background: #FFA500;"></div>
+                    <strong>Oranžové nožnice:</strong> Skracujú hada na polovicu
+                </li>
+                <li>
+                    <div class="color-dot" style="background: #800080;"></div>
+                    <strong>Fialová bomba:</strong> Koniec hry pri náraze
+                </li>
+            </ul>
+            <h2>Tipy</h2>
+            <ul>
+                <li>• Vyhnite sa nárazu do vlastného chvosta</li>
+                <li>• Vyhnite sa bombám - spôsobia koniec hry</li>
+                <li>• Nožnice skracujú hada, ale neznižujú skóre</li>
+                <li>• Môžete meniť farbu hada kliknutím na farebné tlačidlá</li>
+                <li>• Had môže prechádzať cez steny obrazovky</li>
+            </ul>
         </div>
         <div class="controls">
             <button class="button" onclick="location.reload()">Nová hra</button>
