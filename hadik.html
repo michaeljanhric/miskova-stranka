@@ -68,7 +68,11 @@
 
         // game
         let gameIsRunning = true;
-        const fps = 10;
+        const fps = 6;  // RÝCHLOSŤ HADA - čím menšie číslo, tým pomalší had
+                        // napríklad:
+                        // fps = 5 (veľmi pomalý had)
+                        // fps = 10 (stredná rýchlosť)
+                        // fps = 15 (rýchly had)
         const tileSize = 50;
         const tileCountX = canvas.width / tileSize;
         const tileCountY = canvas.height / tileSize;
@@ -243,34 +247,46 @@
 
         // keyboard controls
         document.addEventListener("keydown", function(event) {
-            switch (event.key) {
-                case "ArrowLeft":
-                    if (velocityX !== 1) {
+            let moved = false;  // sledovanie či sa had pohol
+            
+            switch (event.key.toLowerCase()) {  // toLowerCase() aby fungovalo aj s CapsLock
+                case "a":  // vľavo z pohľadu hada
+                    if (velocityX !== 1) {  // ak nejde doprava
                         velocityX = -1;
                         velocityY = 0;
+                        moved = true;
                     }
                     break;
-                case "ArrowUp":
-                    if (velocityY !== 1) {
-                        velocityX = 0;
-                        velocityY = -1;
-                    }
-                    break;
-                case "ArrowRight":
-                    if (velocityX !== -1) {
+                case "d":  // vpravo z pohľadu hada
+                    if (velocityX !== -1) {  // ak nejde doľava
                         velocityX = 1;
                         velocityY = 0;
+                        moved = true;
                     }
                     break;
-                case "ArrowDown":
-                    if (velocityY !== -1) {
+                case "w":  // hore z pohľadu hada
+                    if (velocityY !== 1) {  // ak nejde dole
+                        velocityX = 0;
+                        velocityY = -1;
+                        moved = true;
+                    }
+                    break;
+                case "s":  // dole z pohľadu hada
+                    if (velocityY !== -1) {  // ak nejde hore
                         velocityX = 0;
                         velocityY = 1;
+                        moved = true;
                     }
                     break;
                 default:
                     if (!gameIsRunning) location.reload();
                     break;
+            }
+
+            // Ak sa had pohol, hneď aktualizuj pozíciu a prekresli
+            if (moved && gameIsRunning) {
+                moveStuff();
+                drawStuff();
             }
         });
 
