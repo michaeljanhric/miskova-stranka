@@ -482,7 +482,15 @@
         }
 
         // keyboard controls
+        let lastKeyPress = 0;
+        const KEY_PRESS_DELAY = 100; // minimálny čas medzi stlačeniami kláves v ms
+
         document.addEventListener("keydown", function(event) {
+            const currentTime = Date.now();
+            if (currentTime - lastKeyPress < KEY_PRESS_DELAY) {
+                return; // ignoruj príliš rýchle stlačenia
+            }
+            
             let moved = false;  // sledovanie či sa had pohol
             
             switch (event.key.toLowerCase()) {  // toLowerCase() aby fungovalo aj s CapsLock
@@ -519,10 +527,18 @@
                     break;
             }
 
-            // Ak sa had pohol, hneď aktualizuj pozíciu a prekresli
+            // Ak sa had pohol, aktualizuj čas posledného stlačenia
             if (moved && gameIsRunning) {
+                lastKeyPress = currentTime;
                 moveStuff();
                 drawStuff();
+            }
+        });
+
+        // Zabráň opakovaniu klávesy pri držaní
+        document.addEventListener("keyup", function(event) {
+            if (["w", "a", "s", "d"].includes(event.key.toLowerCase())) {
+                event.preventDefault();
             }
         });
 
