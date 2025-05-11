@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <title>Had</title>
     <style>
-        @import "style.css";
-        
-        canvas {
-            border: 3px solid #4CAF50;
-            background: black;
-            margin: 20px auto;
-            display: block;
+        body {
+            background: #1a1a1a;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
         }
 
         #game-container {
             text-align: center;
             padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         #score {
@@ -28,6 +28,13 @@
             color: #4CAF50;
             margin: 20px 0;
             font-size: 1.2em;
+        }
+
+        canvas {
+            border: 3px solid #4CAF50;
+            background: black;
+            margin: 20px auto;
+            display: block;
         }
 
         .controls {
@@ -74,11 +81,15 @@
             margin: 20px auto;
             max-width: 600px;
             text-align: left;
+            border: 2px solid #4CAF50;
         }
 
         .instructions h2 {
             color: #4CAF50;
             margin-top: 0;
+            text-align: center;
+            border-bottom: 1px solid #4CAF50;
+            padding-bottom: 10px;
         }
 
         .instructions ul {
@@ -87,17 +98,37 @@
         }
 
         .instructions li {
-            margin: 10px 0;
+            margin: 15px 0;
             display: flex;
             align-items: center;
+            font-size: 1.1em;
         }
 
         .color-dot {
-            width: 15px;
-            height: 15px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            margin-right: 10px;
+            margin-right: 15px;
             display: inline-block;
+            border: 2px solid white;
+        }
+
+        .game-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .game-area {
+            flex: 0 0 600px;
+        }
+
+        .info-area {
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
         }
     </style>
 </head>
@@ -105,43 +136,52 @@
     <div id="game-container">
         <div id="score">0</div>
         <div id="highscores">Najlepšie skóre: 0</div>
-        <canvas width="600" height="600"></canvas>
-        <div class="color-buttons">
-            <div class="color-button" style="background: #4CAF50;" onclick="changeSnakeColor('#4CAF50', '#45a049')"></div>
-            <div class="color-button" style="background: #ff0000;" onclick="changeSnakeColor('#ff0000', '#cc0000')"></div>
-            <div class="color-button" style="background: #0000ff;" onclick="changeSnakeColor('#0000ff', '#0000cc')"></div>
-            <div class="color-button" style="background: #ff00ff;" onclick="changeSnakeColor('#ff00ff', '#cc00cc')"></div>
-            <div class="color-button" style="background: #ffff00;" onclick="changeSnakeColor('#ffff00', '#cccc00')"></div>
+        
+        <div class="game-section">
+            <div class="game-area">
+                <canvas width="600" height="600"></canvas>
+                <div class="color-buttons">
+                    <div class="color-button" style="background: #4CAF50;" onclick="changeSnakeColor('#4CAF50', '#45a049')"></div>
+                    <div class="color-button" style="background: #ff0000;" onclick="changeSnakeColor('#ff0000', '#cc0000')"></div>
+                    <div class="color-button" style="background: #0000ff;" onclick="changeSnakeColor('#0000ff', '#0000cc')"></div>
+                    <div class="color-button" style="background: #ff00ff;" onclick="changeSnakeColor('#ff00ff', '#cc00cc')"></div>
+                    <div class="color-button" style="background: #ffff00;" onclick="changeSnakeColor('#ffff00', '#cccc00')"></div>
+                </div>
+            </div>
+            
+            <div class="info-area">
+                <div class="instructions">
+                    <h2>Pravidlá hry</h2>
+                    <ul>
+                        <li>
+                            <div class="color-dot" style="background: #ff0000;"></div>
+                            <strong>Had:</strong> Ovládajte pomocou kláves W (hore), S (dole), A (vľavo), D (vpravo)
+                        </li>
+                        <li>
+                            <div class="color-dot" style="background: #00ff00;"></div>
+                            <strong>Zelené jedlo:</strong> Zvyšuje skóre a dĺžku hada
+                        </li>
+                        <li>
+                            <div class="color-dot" style="background: #FFA500;"></div>
+                            <strong>Oranžové nožnice:</strong> Skracujú hada na polovicu
+                        </li>
+                        <li>
+                            <div class="color-dot" style="background: #800080;"></div>
+                            <strong>Fialová bomba:</strong> Koniec hry pri náraze
+                        </li>
+                    </ul>
+                    <h2>Tipy</h2>
+                    <ul>
+                        <li>• Vyhnite sa nárazu do vlastného chvosta</li>
+                        <li>• Vyhnite sa bombám - spôsobia koniec hry</li>
+                        <li>• Nožnice skracujú hada, ale neznižujú skóre</li>
+                        <li>• Môžete meniť farbu hada kliknutím na farebné tlačidlá</li>
+                        <li>• Had môže prechádzať cez steny obrazovky</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="instructions">
-            <h2>Pravidlá hry</h2>
-            <ul>
-                <li>
-                    <div class="color-dot" style="background: #ff0000;"></div>
-                    <strong>Had:</strong> Ovládajte pomocou kláves W (hore), S (dole), A (vľavo), D (vpravo)
-                </li>
-                <li>
-                    <div class="color-dot" style="background: #00ff00;"></div>
-                    <strong>Zelené jedlo:</strong> Zvyšuje skóre a dĺžku hada
-                </li>
-                <li>
-                    <div class="color-dot" style="background: #FFA500;"></div>
-                    <strong>Oranžové nožnice:</strong> Skracujú hada na polovicu
-                </li>
-                <li>
-                    <div class="color-dot" style="background: #800080;"></div>
-                    <strong>Fialová bomba:</strong> Koniec hry pri náraze
-                </li>
-            </ul>
-            <h2>Tipy</h2>
-            <ul>
-                <li>• Vyhnite sa nárazu do vlastného chvosta</li>
-                <li>• Vyhnite sa bombám - spôsobia koniec hry</li>
-                <li>• Nožnice skracujú hada, ale neznižujú skóre</li>
-                <li>• Môžete meniť farbu hada kliknutím na farebné tlačidlá</li>
-                <li>• Had môže prechádzať cez steny obrazovky</li>
-            </ul>
-        </div>
+
         <div class="controls">
             <button class="button" onclick="location.reload()">Nová hra</button>
             <button class="button" onclick="window.location.href='index.html'">Späť na menu</button>
@@ -330,26 +370,87 @@
             // background
             rectangle("#000", 0, 0, canvas.width, canvas.height);
 
-            // food
-            rectangle("#00ff00", foodPosX, foodPosY, tileSize - 2, tileSize - 2);  // zelené jedlo
+            // food - jablko
+            ctx.fillStyle = "#00ff00";
+            ctx.beginPath();
+            ctx.arc(foodPosX + tileSize/2, foodPosY + tileSize/2, tileSize/2 - 2, 0, Math.PI * 2);
+            ctx.fill();
+            // stopka jablka
+            ctx.fillStyle = "#8B4513";
+            ctx.fillRect(foodPosX + tileSize/2 - 2, foodPosY + 5, 4, 8);
 
-            // bomb
+            // bomb - s iskrou
             if (bombActive) {
-                rectangle("#800080", bombPosX, bombPosY, tileSize - 2, tileSize - 2);  // fialová bomba
+                // telo bomby
+                ctx.fillStyle = "#800080";
+                ctx.beginPath();
+                ctx.arc(bombPosX + tileSize/2, bombPosY + tileSize/2, tileSize/2 - 2, 0, Math.PI * 2);
+                ctx.fill();
+                // iskra
+                ctx.fillStyle = "#FFD700";
+                ctx.beginPath();
+                ctx.moveTo(bombPosX + tileSize/2, bombPosY + 5);
+                ctx.lineTo(bombPosX + tileSize/2 - 5, bombPosY - 5);
+                ctx.lineTo(bombPosX + tileSize/2 + 5, bombPosY - 5);
+                ctx.fill();
             }
 
-            // scissors
+            // scissors - detailné nožnice
             if (scissorsActive) {
-                rectangle("#FFA500", scissorsPosX, scissorsPosY, tileSize - 2, tileSize - 2);  // oranžové nožnice
+                // rukoväť
+                ctx.fillStyle = "#FFA500";
+                ctx.beginPath();
+                ctx.arc(scissorsPosX + tileSize/2, scissorsPosY + tileSize/2, tileSize/2 - 2, 0, Math.PI * 2);
+                ctx.fill();
+                // čepele
+                ctx.fillStyle = "#FFD700";
+                ctx.beginPath();
+                ctx.moveTo(scissorsPosX + tileSize/2, scissorsPosY + 5);
+                ctx.lineTo(scissorsPosX + 5, scissorsPosY + tileSize - 5);
+                ctx.lineTo(scissorsPosX + tileSize - 5, scissorsPosY + tileSize - 5);
+                ctx.fill();
             }
 
-            // tail
-            tail.forEach(snakePart => 
-                rectangle(snakeColor, snakePart.x, snakePart.y, tileSize - 2, tileSize - 2)
-            );
+            // tail - s efektom prechodu farby
+            tail.forEach((snakePart, index) => {
+                const gradient = ctx.createLinearGradient(
+                    snakePart.x, snakePart.y,
+                    snakePart.x + tileSize, snakePart.y + tileSize
+                );
+                gradient.addColorStop(0, snakeColor);
+                gradient.addColorStop(1, snakeHeadColor);
+                ctx.fillStyle = gradient;
+                
+                // zaoblené rohy pre chvost
+                ctx.beginPath();
+                ctx.roundRect(snakePart.x, snakePart.y, tileSize - 2, tileSize - 2, 10);
+                ctx.fill();
+            });
 
-            // snake head
-            rectangle(snakeHeadColor, snakePosX, snakePosY, tileSize - 2, tileSize - 2);
+            // snake head - s očami
+            ctx.fillStyle = snakeHeadColor;
+            ctx.beginPath();
+            ctx.roundRect(snakePosX, snakePosY, tileSize - 2, tileSize - 2, 10);
+            ctx.fill();
+
+            // oči hada
+            ctx.fillStyle = "white";
+            // ľavé oko
+            ctx.beginPath();
+            ctx.arc(snakePosX + tileSize/4, snakePosY + tileSize/4, 5, 0, Math.PI * 2);
+            ctx.fill();
+            // pravé oko
+            ctx.beginPath();
+            ctx.arc(snakePosX + tileSize*3/4, snakePosY + tileSize/4, 5, 0, Math.PI * 2);
+            ctx.fill();
+            // zreničky
+            ctx.fillStyle = "black";
+            ctx.beginPath();
+            ctx.arc(snakePosX + tileSize/4, snakePosY + tileSize/4, 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(snakePosX + tileSize*3/4, snakePosY + tileSize/4, 2, 0, Math.PI * 2);
+            ctx.fill();
         }
 
         function rectangle(color, x, y, width, height) {
