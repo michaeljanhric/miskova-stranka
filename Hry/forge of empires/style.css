@@ -1,0 +1,368 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    overflow: hidden;
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+
+/* Horný panel */
+
+#top-bar {
+    background: linear-gradient(to bottom, #2c3e50, #1a1a1a);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #34495e;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+#resources {
+    display: flex;
+    gap: 25px;
+}
+
+.resource {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px 10px;
+    border-radius: 15px;
+    border: 1px solid #34495e;
+}
+
+.resource .icon {
+    font-size: 20px;
+}
+
+#age-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px 15px;
+    border-radius: 15px;
+    border: 1px solid #34495e;
+}
+
+#age-progress {
+    width: 200px;
+    height: 8px;
+    background-color: #2c3e50;
+    border-radius: 4px;
+    overflow: hidden;
+    border: 1px solid #34495e;
+}
+
+#progress-bar {
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(to right, #27ae60, #2ecc71);
+    transition: width 0.3s ease;
+}
+
+
+/* Hlavná herná plocha */
+
+#game-area {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 120px);
+    /* 60px pre horný a 60px pre spodný panel */
+    overflow: hidden;
+    background: linear-gradient(to bottom, #1a472a, #0d2314);
+}
+
+#game-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    cursor: default;
+}
+
+#game-canvas.building-mode {
+    cursor: none;
+}
+
+
+/* Menu pre budovy */
+
+#building-menu {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 2;
+    background: linear-gradient(to bottom, #2c3e50, #1a1a1a);
+    padding: 15px;
+    border-radius: 10px;
+    color: #e0e0e0;
+    border: 2px solid #34495e;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    min-width: 300px;
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #34495e;
+}
+
+.menu-header button {
+    background: none;
+    border: none;
+    color: #e0e0e0;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.menu-header button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.building-category {
+    margin-bottom: 20px;
+}
+
+.building-category h4 {
+    margin-bottom: 12px;
+    color: #f1c40f;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.building-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+.building-option {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.building-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.building-option.selected {
+    background: rgba(52, 152, 219, 0.3);
+    border-color: #3498db;
+}
+
+.building-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.building-option .cost {
+    font-size: 12px;
+    color: #f1c40f;
+    margin-top: 8px;
+    text-align: center;
+}
+
+
+/* Spodný panel */
+
+#bottom-bar {
+    background: linear-gradient(to bottom, #2c3e50, #1a1a1a);
+    padding: 15px;
+    display: flex;
+    gap: 20px;
+    border-top: 2px solid #34495e;
+}
+
+#research,
+#quests {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #34495e;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #34495e;
+}
+
+.panel-header h3 {
+    color: #f1c40f;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+
+/* Technológie */
+
+.technology {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid #34495e;
+}
+
+.technology:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.technology.researched {
+    background: rgba(46, 204, 113, 0.2);
+    border-color: #27ae60;
+}
+
+.technology.researching {
+    background: rgba(241, 196, 15, 0.2);
+    border-color: #f1c40f;
+}
+
+.technology h4 {
+    color: #f1c40f;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.technology .cost {
+    color: #f1c40f;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.progress-bar {
+    height: 6px;
+    background: #2c3e50;
+    border-radius: 3px;
+    margin-top: 8px;
+    overflow: hidden;
+    border: 1px solid #34495e;
+}
+
+.progress {
+    height: 100%;
+    background: linear-gradient(to right, #f1c40f, #f39c12);
+    transition: width 0.3s ease;
+}
+
+
+/* Úlohy */
+
+.quest {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid #34495e;
+}
+
+.quest h4 {
+    color: #f1c40f;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.quest .rewards {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #2ecc71;
+}
+
+
+/* Utility triedy */
+
+.hidden {
+    display: none !important;
+}
+
+.building-categories,
+#research-tree,
+#quest-list {
+    max-height: 500px;
+    overflow-y: auto;
+    transition: max-height 0.3s ease-out;
+    padding-right: 5px;
+}
+
+.building-categories::-webkit-scrollbar,
+#research-tree::-webkit-scrollbar,
+#quest-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.building-categories::-webkit-scrollbar-track,
+#research-tree::-webkit-scrollbar-track,
+#quest-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.building-categories::-webkit-scrollbar-thumb,
+#research-tree::-webkit-scrollbar-thumb,
+#quest-list::-webkit-scrollbar-thumb {
+    background: #34495e;
+    border-radius: 4px;
+}
+
+.building-categories::-webkit-scrollbar-thumb:hover,
+#research-tree::-webkit-scrollbar-thumb:hover,
+#quest-list::-webkit-scrollbar-thumb:hover {
+    background: #2c3e50;
+}
+
+background: #2c3e50;
+
+/* Preview budovy */
+
+.building-preview {
+    position: fixed;
+    pointer-events: none;
+    opacity: 0.5;
+    z-index: 1000;
+    mix-blend-mode: multiply;
+}
+
+.building-preview.valid {
+    background-color: rgba(46, 204, 113, 0.3);
+    border: 2px solid #27ae60;
+}
+
+.building-preview.invalid {
+    background-color: rgba(231, 76, 60, 0.3);
+    border: 2px solid #c0392b;
+}

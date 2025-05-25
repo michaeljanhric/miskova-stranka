@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Forge of Empires - Clone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="game-container">
+        <!-- Horný panel -->
+        <div id="top-bar">
+            <div id="resources">
+                <div class="resource">
+                    <span class="icon">💰</span>
+                    <span id="gold">1000</span>
+                </div>
+                <div class="resource">
+                    <span class="icon">📦</span>
+                    <span id="supplies">500</span>
+                </div>
+                <div class="resource">
+                    <span class="icon">😊</span>
+                    <span id="happiness">100</span>
+                </div>
+                <div class="resource">
+                    <span class="icon">👥</span>
+                    <span id="population">15</span>
+                </div>
+            </div>
+            <div id="age-info">
+                <span id="current-age">Kamenná doba</span>
+                <div id="age-progress">
+                    <div id="progress-bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hlavná herná plocha -->
+        <div id="game-area">
+            <canvas id="game-canvas"></canvas>
+
+            <!-- Menu pre budovy -->
+            <div id="building-menu">
+                <div class="menu-header">
+                    <h3>Budovy</h3>
+                    <button id="toggle-menu">▼</button>
+                </div>
+                <div class="building-categories">
+                    <div class="building-category">
+                        <h4>Obytné budovy</h4>
+                        <div class="building-options">
+                            <div class="building-option" data-building="hut">
+                                <div class="building-icon">🏠</div>
+                                <span>Chatrč</span>
+                                <div class="cost">Z:50, Z:100</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="building-category">
+                        <h4>Produkčné budovy</h4>
+                        <div class="building-options">
+                            <div class="building-option" data-building="hunter">
+                                <div class="building-icon">🏹</div>
+                                <span>Lovecká chatka</span>
+                                <div class="cost">Z:100, Z:150</div>
+                            </div>
+                            <div class="building-option" data-building="farm">
+                                <div class="building-icon">🌾</div>
+                                <span>Farma</span>
+                                <div class="cost">Z:150, Z:200</div>
+                            </div>
+                            <div class="building-option" data-building="pottery">
+                                <div class="building-icon">🏺</div>
+                                <span>Hrnčiarska dielňa</span>
+                                <div class="cost">Z:200, Z:250</div>
+                            </div>
+                            <div class="building-option" data-building="mine">
+                                <div class="building-icon">⛏️</div>
+                                <span>Baňa</span>
+                                <div class="cost">Z:250, Z:300</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="building-category">
+                        <h4>Vojenské budovy</h4>
+                        <div class="building-options">
+                            <div class="building-option" data-building="barracks">
+                                <div class="building-icon">⚔️</div>
+                                <span>Kasárne</span>
+                                <div class="cost">Z:300, Z:400</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spodný panel -->
+        <div id="bottom-bar">
+            <div id="research">
+                <div class="panel-header">
+                    <h3>Výskum</h3>
+                    <button id="toggle-research">▼</button>
+                </div>
+                <div id="research-tree" class="hidden"></div>
+            </div>
+            <div id="quests">
+                <div class="panel-header">
+                    <h3>Úlohy</h3>
+                    <button id="toggle-quests">▼</button>
+                </div>
+                <div id="quest-list" class="hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripty -->
+    <script src="js/resources.js"></script>
+    <script src="js/buildings.js"></script>
+    <script src="js/research.js"></script>
+    <script src="js/quests.js"></script>
+    <script src="js/units.js"></script>
+    <script src="js/game.js"></script>
+</body>
+
+</html>
