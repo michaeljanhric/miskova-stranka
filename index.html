@@ -3,30 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miškove Hry</title>
+    <title>Minecraft Clone</title>
     <style>
-        @import "style.css";
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        #ui {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+
+        .stat-bar {
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 1px 1px 2px black;
+        }
+
+        .label {
+            margin-bottom: 5px;
+        }
+
+        .bar {
+            width: 200px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .fill {
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        #health .fill {
+            background: #ff0000;
+            width: 100%;
+        }
+
+        #hunger .fill {
+            background: #ffa500;
+            width: 100%;
+        }
+
+        #experience .fill {
+            background: #00ff00;
+            width: 0%;
+        }
     </style>
 </head>
 <body>
-    <h1>Miškove Hry</h1>
-    
-    <div class="terminal">
-        <div id="output"></div>
-        <div class="game-buttons">
-            <button onclick="selectGame('1')">Strašidlá <img src="duch.png" alt="duch" class="game-icon"></button>
-            <button onclick="selectGame('2')">Had <img src="snake.png" alt="had" class="game-icon"></button>
-        </div>
-    </div>
-
-    <script>
-        function selectGame(command) {
-            if (command === '1') {
-                window.location.href = 'strasidla.html';
-            } else if (command === '2') {
-                window.location.href = 'hadik.html';
-            }
-        }
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/blocks.js"></script>
+    <script src="js/world.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/game.js"></script>
 </body>
 </html>

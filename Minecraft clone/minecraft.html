@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <title>Minecraft Klon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="hud">
+            <div id="health">
+                <div class="health-bar">
+                    <div class="health-fill"></div>
+                </div>
+                <span>❤️</span>
+            </div>
+            <div id="hunger">
+                <div class="hunger-bar">
+                    <div class="hunger-fill"></div>
+                </div>
+                <span>🍖</span>
+            </div>
+            <div id="experience">
+                <div class="exp-bar">
+                    <div class="exp-fill"></div>
+                </div>
+                <span>⭐</span>
+            </div>
+        </div>
+
+        <div id="crosshair">+</div>
+
+        <div id="inventory">
+            <div class="inventory-row">
+                <div class="inventory-slot selected" data-block="grass">🌳</div>
+                <div class="inventory-slot" data-block="dirt">🟫</div>
+                <div class="inventory-slot" data-block="stone">🪨</div>
+                <div class="inventory-slot" data-block="wood">🪵</div>
+                <div class="inventory-slot" data-block="leaves">🍃</div>
+                <div class="inventory-slot" data-block="water">💧</div>
+                <div class="inventory-slot" data-block="sand">🏖️</div>
+                <div class="inventory-slot" data-block="glass">🪟</div>
+                <div class="inventory-slot" data-block="torch">🔥</div>
+            </div>
+        </div>
+
+        <div id="debug-info">
+            <div>FPS: <span id="fps">0</span></div>
+            <div>Pozícia: <span id="position">0, 0, 0</span></div>
+            <div>Blok: <span id="looking-at">žiadny</span></div>
+            <div>Vzdialenosť: <span id="distance">0</span></div>
+        </div>
+
+        <div id="menu" class="hidden">
+            <div class="menu-content">
+                <h2>Minecraft Klon</h2>
+                <button id="resume-btn">Pokračovať</button>
+                <button id="new-world-btn">Nový svet</button>
+                <button id="settings-btn">Nastavenia</button>
+                <button id="quit-btn">Ukončiť</button>
+            </div>
+        </div>
+
+        <div id="settings" class="hidden">
+            <div class="settings-content">
+                <h2>Nastavenia</h2>
+                <div class="setting">
+                    <label>Citlivosť myši:</label>
+                    <input type="range" id="mouse-sensitivity" min="1" max="10" value="5">
+                </div>
+                <div class="setting">
+                    <label>Rýchlosť pohybu:</label>
+                    <input type="range" id="move-speed" min="1" max="10" value="5">
+                </div>
+                <div class="setting">
+                    <label>Renderovacia vzdialenosť:</label>
+                    <input type="range" id="render-distance" min="1" max="16" value="8">
+                </div>
+                <div class="setting">
+                    <label>FOV:</label>
+                    <input type="range" id="fov" min="60" max="120" value="75">
+                </div>
+                <button id="save-settings">Uložiť</button>
+                <button id="back-btn">Späť</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="js/textures.js"></script>
+    <script src="js/blocks.js"></script>
+    <script src="js/world.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/physics.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
