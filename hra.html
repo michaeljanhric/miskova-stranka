@@ -19,8 +19,8 @@
         body {
             margin: 0;
             padding: 0;
-            background: #1a1a1a;
-            color: #fff;
+            background: #f0f0f0;
+            color: #333;
             font-family: 'Arial', sans-serif;
         }
         
@@ -29,7 +29,7 @@
             height: 100vh;
             position: relative;
             overflow: hidden;
-            background: #1a1a1a;
+            background: #90EE90;
         }
         
         .game-grid {
@@ -47,14 +47,14 @@
         }
         
         .grid-cell {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
             position: relative;
             transition: background-color 0.3s ease;
         }
         
         .grid-cell:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.9);
             cursor: pointer;
         }
         
@@ -63,13 +63,14 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
             padding: 15px;
             display: flex;
             justify-content: space-around;
             z-index: 1000;
             border-bottom: 2px solid var(--gold-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         
         .resource-item {
@@ -89,24 +90,26 @@
             right: 0;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
             padding: 20px;
             border-left: 2px solid var(--gold-color);
             z-index: 1000;
             max-height: 80vh;
             overflow-y: auto;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
         }
         
         .age-indicator {
             position: fixed;
             top: 60px;
             left: 20px;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(255, 255, 255, 0.9);
             padding: 10px;
             border-radius: 5px;
             z-index: 1000;
             border: 1px solid var(--gold-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         
         .technology-tree {
@@ -125,18 +128,19 @@
         .building-button {
             width: 100%;
             margin-bottom: 10px;
-            background: #2c2c2c;
-            border: 1px solid var(--gold-color);
-            color: white;
+            background: #fff;
+            border: 1px solid #ddd;
+            color: #333;
             padding: 10px;
             display: flex;
             align-items: center;
             gap: 10px;
             transition: transform 0.3s ease;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
         }
         
         .building-button:hover {
-            background: #3c3c3c;
+            background: #f8f8f8;
             transform: scale(1.02);
         }
         
@@ -149,7 +153,7 @@
         .age-progress {
             width: 200px;
             height: 20px;
-            background: #333;
+            background: #fff;
             border-radius: 10px;
             overflow: hidden;
             margin-top: 5px;
@@ -167,13 +171,14 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(0, 0, 0, 0.9);
-            color: white;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
             padding: 15px;
             border-radius: 5px;
             display: none;
             z-index: 1001;
             border: 1px solid var(--gold-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         
         .quest-log {
@@ -252,7 +257,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: #1a1a1a;
+            background: #90EE90;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -262,10 +267,11 @@
         .loading-progress {
             width: 200px;
             height: 20px;
-            background: #333;
+            background: #fff;
             border-radius: 10px;
             overflow: hidden;
             border: 1px solid var(--gold-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         
         .loading-bar {
