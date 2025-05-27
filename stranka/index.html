@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miškove Hry</title>
+    <style>
+        @import "style.css";
+    </style>
+</head>
+
+<body>
+    <h1>Miškove Hry</h1>
+
+    <div class="terminal">
+        <div id="output"></div>
+        <div class="game-buttons">
+            <button onclick="selectGame('1')">Strašidlá <img src="duch.png" alt="duch" class="game-icon"></button>
+            <button onclick="selectGame('2')">Had <img src="snake.png" alt="had" class="game-icon"></button>
+            <button onclick="selectGame('3')">Stavaj! <img src="boj.png" alt="boj" class="game-icon"></button>
+        </div>
+    </div>
+
+    <script>
+        function selectGame(command) {
+            if (command === '1') {
+                window.location.href = 'strasidla.html';
+            } else if (command === '2') {
+                window.location.href = 'hadik.html';
+            } else if (command === '3') {
+                window.location.href = 'hra.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

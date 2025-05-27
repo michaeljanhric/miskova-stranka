@@ -109,6 +109,7 @@ class Building {
             const currentTime = Date.now();
             if (this.lastProductionTime === 0) {
                 this.lastProductionTime = currentTime;
+                console.log(`Začiatok produkcie pre ${this.type} na pozícii [${this.x}, ${this.y}]`);
             }
 
             const timeDiff = currentTime - this.lastProductionTime;
@@ -119,6 +120,7 @@ class Building {
                 this.producedResource = {...this.production };
                 this.productionProgress = 0;
                 this.lastProductionTime = currentTime;
+                console.log(`Vyrobený zdroj pre ${this.type} na pozícii [${this.x}, ${this.y}]:`, this.producedResource);
             }
         }
     }

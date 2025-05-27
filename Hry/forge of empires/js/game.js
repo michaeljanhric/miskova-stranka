@@ -116,6 +116,11 @@ class Game {
             const building = this.getBuildingAt(worldX, worldY);
             if (building && building.producedResource) {
                 console.log('Našla sa budova so zdrojom:', building);
+                console.log('Typ budovy:', building.type);
+                console.log('Pozícia budovy:', { x: building.x, y: building.y });
+                console.log('Veľkosť budovy:', building.size);
+                console.log('Vyrobený zdroj:', building.producedResource);
+
                 const iconSize = 32;
                 const iconX = building.x + (building.size - iconSize) / 2;
                 const iconY = building.y - iconSize - 10;
@@ -138,10 +143,15 @@ class Game {
                         console.log('Vyzbierané zdroje:', collected);
                         // Pridanie vyzbieraných zdrojov
                         for (const [resource, amount] of Object.entries(collected)) {
+                            console.log(`Pridávam ${amount} ${resource}`);
                             this.resourceManager.addResource(resource, amount);
                         }
+                    } else {
+                        console.log('Nepodarilo sa vyzbierať zdroje');
                     }
                     return;
+                } else {
+                    console.log('Klik bol mimo oblasti ikonky');
                 }
             }
 
