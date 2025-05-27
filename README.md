@@ -1,4 +1,4 @@
-# Forge of Empires Clone
+# Stavaj a bojuj!
 
 ## Inštalácia obrázkov
 

@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="sk">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stavaj a Bojuj!</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+         :root {
+            --bronze-age: #cd7f32;
+            --iron-age: #a19d94;
+            --early-middle-ages: #8b4513;
+            --high-middle-ages: #654321;
+            --late-middle-ages: #4b3621;
+            --gold-color: #ffd700;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: #1a1a1a;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .game-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+        
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(20, 50px);
+            grid-template-rows: repeat(20, 50px);
+            gap: 1px;
+            background: rgba(51, 51, 51, 0.8);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid var(--gold-color);
+            will-change: transform;
+        }
+        
+        .grid-cell {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+        
+        .grid-cell:hover {
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+        }
+        
+        .resources-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+            z-index: 1000;
+            border-bottom: 2px solid var(--gold-color);
+        }
+        
+        .resource-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .resource-icon {
+            width: 24px;
+            height: 24px;
+            background-size: contain;
+        }
+        
+        .building-menu {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            border-left: 2px solid var(--gold-color);
+            z-index: 1000;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .age-indicator {
+            position: fixed;
+            top: 60px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+            border: 1px solid var(--gold-color);
+        }
+        
+        .technology-tree {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px;
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+            border: 1px solid var(--gold-color);
+        }
+        
+        .building-button {
+            width: 100%;
+            margin-bottom: 10px;
+            background: #2c2c2c;
+            border: 1px solid var(--gold-color);
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .building-button:hover {
+            background: #3c3c3c;
+            transform: scale(1.02);
+        }
+        
+        .building-icon {
+            width: 32px;
+            height: 32px;
+            background-size: contain;
+        }
+        
+        .age-progress {
+            width: 200px;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 5px;
+            border: 1px solid var(--gold-color);
+        }
+        
+        .age-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--bronze-age), var(--iron-age));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1001;
+            border: 1px solid var(--gold-color);
+        }
+        
+        .quest-log {
+            position: fixed;
+            left: 20px;
+            top: 120px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 1000;
+            border: 1px solid var(--gold-color);
+            max-width: 300px;
+        }
+        
+        .quest-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+        
+        .quest-reward {
+            color: var(--gold-color);
+            font-size: 0.9em;
+        }
+        
+        .military-menu {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 1000;
+            border: 1px solid var(--gold-color);
+        }
+        
+        .unit-button {
+            background: #2c2c2c;
+            border: 1px solid var(--gold-color);
+            color: white;
+            padding: 8px;
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .unit-icon {
+            width: 24px;
+            height: 24px;
+            background-size: contain;
+        }
+        
+        .diplomacy-menu {
+            position: fixed;
+            right: 20px;
+            top: 120px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 1000;
+            border: 1px solid var(--gold-color);
+        }
+        
+        .player-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--gold-color);
+        }
+        
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .loading-progress {
+            width: 200px;
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--gold-color);
+        }
+        
+        .loading-bar {
+            height: 100%;
+            background: var(--gold-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-progress">
+            <div class="loading-bar" id="loadingBar"></div>
+        </div>
+    </div>
+
+    <div class="resources-bar">
+        <div class="resource-item">
+            <div class="resource-icon" data-src="assets/images/resources/gold.png"></div>
+            <span>Zlato: <span id="gold">1000</span></span>
+        </div>
+        <div class="resource-item">
+            <div class="resource-icon" data-src="assets/images/resources/wood.png"></div>
+            <span>Drevo: <span id="wood">500</span></span>
+        </div>
+        <div class="resource-item">
+            <div class="resource-icon" data-src="assets/images/resources/stone.png"></div>
+            <span>Kameň: <span id="stone">300</span></span>
+        </div>
+        <div class="resource-item">
+            <div class="resource-icon" data-src="assets/images/resources/iron.png"></div>
+            <span>Železo: <span id="iron">200</span></span>
+        </div>
+        <div class="resource-item">
+            <div class="resource-icon" data-src="assets/images/resources/happiness.png"></div>
+            <span>Šťastie: <span id="happiness">100</span></span>
+        </div>
+        <div class="resource-item">
+            <div class="resource-icon" data-src="assets/images/resources/population.png"></div>
+            <span>Populácia: <span id="population">50</span>/<span id="maxPopulation">100</span></span>
+        </div>
+    </div>
+
+    <div class="age-indicator">
+        <h4>Doba Bronzová</h4>
+        <div class="age-progress">
+            <div class="age-progress-bar" id="ageProgress"></div>
+        </div>
+    </div>
+
+    <div class="quest-log">
+        <h4>Aktívne úlohy</h4>
+        <div class="quest-item">
+            <h5>Prvé kroky</h5>
+            <p>Postavte svoj prvý dom</p>
+            <div class="quest-reward">Odmena: 100 zlata</div>
+        </div>
+        <div class="quest-item">
+            <h5>Základná infraštruktúra</h5>
+            <p>Postavte farmu a baňu</p>
+            <div class="quest-reward">Odmena: 200 zlata, 50 dreva</div>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <div class="game-grid" id="gameGrid"></div>
+    </div>
+
+    <div class="building-menu">
+        <h3>Budovy</h3>
+        <div class="building-list" id="buildingList"></div>
+    </div>
+
+    <div class="military-menu">
+        <h4>Vojenské jednotky</h4>
+        <button class="unit-button" data-unit="spearman">
+            <div class="unit-icon" style="background-image: url('assets/images/units/spearman.png')"></div>
+            <div>
+                <div>Kopijník</div>
+                <small>Náklady: 50 zlata, 20 železa</small>
+            </div>
+        </button>
+        <button class="unit-button" data-unit="archer">
+            <div class="unit-icon" style="background-image: url('assets/images/units/archer.png')"></div>
+            <div>
+                <div>Lukostrelec</div>
+                <small>Náklady: 75 zlata, 30 železa</small>
+            </div>
+        </button>
+    </div>
+
+    <div class="diplomacy-menu">
+        <h4>Diplomacia</h4>
+        <div class="player-list">
+            <div class="player-item">
+                <img src="assets/images/avatars/player1.png" class="player-avatar">
+                <div>
+                    <div>Rímska ríša</div>
+                    <small>Status: Neutrálny</small>
+                </div>
+            </div>
+            <div class="player-item">
+                <img src="assets/images/avatars/player2.png" class="player-avatar">
+                <div>
+                    <div>Egyptská ríša</div>
+                    <small>Status: Priateľský</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="technology-tree">
+        <h3>Technologický strom</h3>
+        <div class="tech-list">
+            <div class="tech-item">
+                <h5>Základné technológie</h5>
+                <button class="btn btn-sm btn-primary" data-tech="agriculture">Poľnohospodárstvo</button>
+                <button class="btn btn-sm btn-primary" data-tech="mining">Ťažba</button>
+                <button class="btn btn-sm btn-primary" data-tech="masonry">Murárstvo</button>
+            </div>
+            <div class="tech-item">
+                <h5>Vojenské technológie</h5>
+                <button class="btn btn-sm btn-primary" data-tech="bronze-weapons">Bronzové zbrane</button>
+                <button class="btn btn-sm btn-primary" data-tech="iron-weapons">Železné zbrane</button>
+            </div>
+            <div class="tech-item">
+                <h5>Ekonomické technológie</h5>
+                <button class="btn btn-sm btn-primary" data-tech="trade">Obchod</button>
+                <button class="btn btn-sm btn-primary" data-tech="currency">Mena</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Herné konštanty
+        const AGES = {
+            BRONZE_AGE: {
+                name: 'Doba Bronzová',
+                color: '#cd7f32',
+                buildings: ['house', 'farm', 'mine', 'barracks'],
+                technologies: ['agriculture', 'mining', 'bronze-weapons']
+            },
+            IRON_AGE: {
+                name: 'Doba Železná',
+                color: '#a19d94',
+                buildings: ['house', 'farm', 'mine', 'barracks', 'temple', 'market'],
+                technologies: ['iron-weapons', 'masonry', 'trade']
+            }
+        };
+
+        // Herný stav
+        let gameState = {
+            currentAge: 'BRONZE_AGE',
+            resources: {
+                gold: 1000,
+                wood: 500,
+                stone: 300,
+                iron: 200,
+                happiness: 100,
+                population: 50,
+                maxPopulation: 100
+            },
+            buildings: [],
+            technologies: [],
+            selectedBuilding: null,
+            units: [],
+            quests: [{
+                id: 'first_steps',
+                title: 'Prvé kroky',
+                description: 'Postavte svoj prvý dom',
+                reward: {
+                    gold: 100
+                },
+                completed: false
+            }, {
+                id: 'basic_infrastructure',
+                title: 'Základná infraštruktúra',
+                description: 'Postavte farmu a baňu',
+                reward: {
+                    gold: 200,
+                    wood: 50
+                },
+                completed: false
+            }]
+        };
+
+        // Načítavanie obrázkov
+        const imageCache = new Map();
+        const imagesToLoad = [
+            'assets/images/resources/gold.png',
+            'assets/images/resources/wood.png',
+            'assets/images/resources/stone.png',
+            'assets/images/resources/iron.png',
+            'assets/images/resources/happiness.png',
+            'assets/images/resources/population.png',
+            'assets/images/buildings/house.png',
+            'assets/images/buildings/farm.png',
+            'assets/images/buildings/mine.png',
+            'assets/images/buildings/barracks.png',
+            'assets/images/buildings/temple.png'
+        ];
+
+        function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => {
+                    imageCache.set(src, img);
+                    resolve(img);
+                };
+                img.onerror = reject;
+                img.src = src;
+            });
+        }
+
+        async function loadAllImages() {
+            const loadingBar = document.getElementById('loadingBar');
+            const totalImages = imagesToLoad.length;
+            let loadedImages = 0;
+
+            for (const src of imagesToLoad) {
+                try {
+                    await loadImage(src);
+                    loadedImages++;
+                    loadingBar.style.width = `${(loadedImages / totalImages) * 100}%`;
+                } catch (error) {
+                    console.error(`Chyba pri načítaní obrázka: ${src}`, error);
+                }
+            }
+
+            // Skrytie loading obrazovky
+            document.getElementById('loadingScreen').style.display = 'none';
+            initializeGame();
+        }
+
+        // Inicializácia hernej mriežky
+        function initializeGrid() {
+            const gameGrid = document.getElementById('gameGrid');
+            const gridSize = 20;
+            const fragment = document.createDocumentFragment();
+
+            for (let i = 0; i < gridSize * gridSize; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'grid-cell';
+                cell.dataset.x = i % gridSize;
+                cell.dataset.y = Math.floor(i / gridSize);
+                fragment.appendChild(cell);
+            }
+
+            gameGrid.appendChild(fragment);
+        }
+
+        // Inicializácia menu budov
+        function initializeBuildingMenu() {
+            const buildingList = document.getElementById('buildingList');
+            const buildings = [{
+                type: 'house',
+                name: 'Dom',
+                cost: {
+                    gold: 100,
+                    wood: 50
+                },
+                population: 5
+            }, {
+                type: 'farm',
+                name: 'Farma',
+                cost: {
+                    gold: 150,
+                    wood: 75
+                },
+                production: {
+                    gold: 10
+                }
+            }, {
+                type: 'mine',
+                name: 'Baňa',
+                cost: {
+                    gold: 300,
+                    wood: 150,
+                    stone: 100
+                },
+                production: {
+                    iron: 5
+                }
+            }, {
+                type: 'barracks',
+                name: 'Kasárne',
+                cost: {
+                    gold: 200,
+                    wood: 100,
+                    stone: 50
+                },
+                happiness: -5
+            }, {
+                type: 'temple',
+                name: 'Chrám',
+                cost: {
+                    gold: 400,
+                    wood: 200,
+                    stone: 150
+                },
+                happiness: 10
+            }];
+
+            buildings.forEach(building => {
+                        const button = document.createElement('button');
+                        button.className = 'building-button';
+                        button.dataset.building = building.type;
+
+                        const icon = document.createElement('div');
+                        icon.className = 'building-icon';
+                        icon.dataset.src = `assets/images/buildings/${building.type}.png`;
+
+                        const info = document.createElement('div');
+                        info.innerHTML = `
+                    <div>${building.name}</div>
+                    <small>Náklady: ${Object.entries(building.cost).map(([resource, amount]) => `${amount} ${resource}`).join(', ')}</small>
+                    ${building.population ? `<small>Populácia: +${building.population}</small>` : ''}
+                    ${building.production ? `<small>Výroba: ${Object.entries(building.production).map(([resource, amount]) => `+${amount} ${resource}/hod`).join(', ')}</small>` : ''}
+                    ${building.happiness ? `<small>Šťastie: ${building.happiness > 0 ? '+' : ''}${building.happiness}</small>` : ''}
+                `;
+
+                button.appendChild(icon);
+                button.appendChild(info);
+                buildingList.appendChild(button);
+            });
+        }
+
+        // Event listeners
+        function setupEventListeners() {
+            const buildings = document.querySelectorAll('.building-button');
+            buildings.forEach(building => {
+                building.addEventListener('click', () => {
+                    gameState.selectedBuilding = building.dataset.building;
+                    showNotification(`Vybratá budova: ${building.dataset.building}`);
+                });
+            });
+
+            const gameGrid = document.getElementById('gameGrid');
+            gameGrid.addEventListener('click', (e) => {
+                if (e.target.classList.contains('grid-cell') && gameState.selectedBuilding) {
+                    const x = parseInt(e.target.dataset.x);
+                    const y = parseInt(e.target.dataset.y);
+                    buildStructure(x, y, gameState.selectedBuilding);
+                }
+            });
+        }
+
+        // Herné funkcie
+        function buildStructure(x, y, buildingType) {
+            const building = {
+                type: buildingType,
+                x: x,
+                y: y,
+                level: 1
+            };
+            
+            gameState.buildings.push(building);
+            updateGrid();
+            checkQuests();
+            showNotification(`Postavená budova: ${buildingType}`);
+        }
+
+        function updateGrid() {
+            gameState.buildings.forEach(building => {
+                const cell = document.querySelector(`.grid-cell[data-x="${building.x}"][data-y="${building.y}"]`);
+                if (cell) {
+                    const img = imageCache.get(`assets/images/buildings/${building.type}.png`);
+                    if (img) {
+                        cell.style.backgroundImage = `url(${img.src})`;
+                        cell.style.backgroundSize = 'cover';
+                    }
+                }
+            });
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        function checkQuests() {
+            gameState.quests.forEach(quest => {
+                if (!quest.completed) {
+                    // Kontrola podmienok úlohy
+                    if (quest.id === 'first_steps' && gameState.buildings.some(b => b.type === 'house')) {
+                        completeQuest(quest);
+                    }
+                    if (quest.id === 'basic_infrastructure' &&
+                        gameState.buildings.some(b => b.type === 'farm') &&
+                        gameState.buildings.some(b => b.type === 'mine')) {
+                        completeQuest(quest);
+                    }
+                }
+            });
+        }
+
+        function completeQuest(quest) {
+            quest.completed = true;
+            // Pridanie odmeny
+            Object.entries(quest.reward).forEach(([resource, amount]) => {
+                gameState.resources[resource] += amount;
+            });
+            showNotification(`Úloha dokončená: ${quest.title}`);
+            updateResources();
+        }
+
+        function updateResources() {
+            Object.entries(gameState.resources).forEach(([resource, amount]) => {
+                const element = document.getElementById(resource);
+                if (element) {
+                    element.textContent = amount;
+                }
+            });
+        }
+
+        // Aktualizácia progresu epochy
+        function updateAgeProgress(progress) {
+            const progressBar = document.getElementById('ageProgress');
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // Inicializácia hry
+        function initializeGame() {
+            initializeGrid();
+            initializeBuildingMenu();
+            setupEventListeners();
+            updateResources();
+
+            // Načítanie ikon zdrojov
+            document.querySelectorAll('.resource-icon').forEach(icon => {
+                const img = imageCache.get(icon.dataset.src);
+                if (img) {
+                    icon.style.backgroundImage = `url(${img.src})`;
+                }
+            });
+
+            // Načítanie ikon budov
+            document.querySelectorAll('.building-icon').forEach(icon => {
+                const img = imageCache.get(icon.dataset.src);
+                if (img) {
+                    icon.style.backgroundImage = `url(${img.src})`;
+                }
+            });
+        }
+
+        // Spustenie načítavania
+        loadAllImages();
+    </script>
+</body>
+
+</html>
