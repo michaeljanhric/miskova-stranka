@@ -31,9 +31,7 @@ body {
 #grid-container {
     position: absolute;
     width: 1000px;
-    /* 20 buniek * 50px */
     height: 1000px;
-    /* 20 buniek * 50px */
     display: grid;
     grid-template-columns: repeat(20, 50px);
     grid-template-rows: repeat(20, 50px);
@@ -44,6 +42,7 @@ body {
 .grid-cell {
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.2);
+    position: relative;
 }
 
 #game-canvas {
@@ -101,17 +100,45 @@ body {
     z-index: 2;
 }
 
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.menu-header h3 {
+    margin: 0;
+    color: #333;
+}
+
 .menu-header button {
     background: none;
     border: none;
-    color: #333;
+    color: #666;
     cursor: pointer;
     font-size: 16px;
-    padding: 5px 10px;
+    padding: 5px;
 }
 
 .menu-header button:hover {
-    background-color: #f5f5f5;
+    color: #333;
+}
+
+.building-category {
+    margin-bottom: 20px;
+}
+
+.building-category h4 {
+    padding: 10px;
+    margin: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+}
+
+.building-options {
+    padding: 10px;
 }
 
 .building-option {
@@ -120,7 +147,6 @@ body {
     padding: 10px;
     cursor: pointer;
     border-bottom: 1px solid #eee;
-    color: #333;
 }
 
 .building-option:hover {
@@ -138,11 +164,37 @@ body {
     font-size: 0.9em;
 }
 
-.building-category h4 {
-    color: #333;
+
+/* Štýly pre výskum a úlohy */
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 10px;
-    margin: 0;
     border-bottom: 1px solid #eee;
+}
+
+.panel-header h3 {
+    margin: 0;
+    color: #333;
+}
+
+.panel-header button {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.panel-header button:hover {
+    color: #333;
+}
+
+.hidden {
+    display: none;
 }
 
 
@@ -433,10 +485,6 @@ body {
 
 /* Utility triedy */
 
-.hidden {
-    display: none !important;
-}
-
 .building-categories,
 #research-tree,
 #quest-list {
@@ -477,7 +525,7 @@ background: #2c3e50;
 /* Preview budovy */
 
 .building-preview {
-    position: fixed;
+    position: absolute;
     pointer-events: none;
     opacity: 0.5;
     z-index: 1000;
@@ -492,4 +540,52 @@ background: #2c3e50;
 .building-preview.invalid {
     background-color: rgba(231, 76, 60, 0.3);
     border: 2px solid #c0392b;
+}
+
+.town-hall {
+    background-color: #8B4513;
+    border: 2px solid #654321;
+}
+
+.building-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+    pointer-events: none;
+}
+
+.building {
+    background-color: #8B4513;
+    border: 2px solid #654321;
+}
+
+.building.hut {
+    background-color: #A0522D;
+}
+
+.building.hunter {
+    background-color: #6B8E23;
+}
+
+.building.farm {
+    background-color: #228B22;
+}
+
+.building.pottery {
+    background-color: #CD853F;
+}
+
+.building.mine {
+    background-color: #696969;
+}
+
+.building.barracks {
+    background-color: #8B0000;
 }
