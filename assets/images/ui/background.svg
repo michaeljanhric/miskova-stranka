@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#1a1a2e"/>
+            <stop offset="100%" style="stop-color:#16213e"/>
+        </linearGradient>
+        <pattern id="stars" width="50" height="50" patternUnits="userSpaceOnUse">
+            <circle cx="25" cy="25" r="1" fill="white" opacity="0.3"/>
+        </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#sky)"/>
+    <rect width="100%" height="100%" fill="url(#stars)"/>
+    <g opacity="0.1">
+        <path d="M0,800 Q480,700 960,800 T1920,800 V1080 H0 Z" fill="#2c3e50"/>
+        <path d="M0,850 Q480,750 960,850 T1920,850 V1080 H0 Z" fill="#34495e"/>
+        <path d="M0,900 Q480,800 960,900 T1920,900 V1080 H0 Z" fill="#2c3e50"/>
+    </g>
+</svg> 
