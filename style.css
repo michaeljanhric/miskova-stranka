@@ -23,14 +23,17 @@ body {
     position: relative;
     background-color: #f0f0f0;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #grid-container {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    width: 1000px;
+    /* 20 buniek * 50px */
+    height: 1000px;
+    /* 20 buniek * 50px */
     display: grid;
     grid-template-columns: repeat(20, 50px);
     grid-template-rows: repeat(20, 50px);
@@ -45,10 +48,8 @@ body {
 
 #game-canvas {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    width: 1000px;
+    height: 1000px;
     z-index: 1;
 }
 
@@ -100,8 +101,17 @@ body {
     z-index: 2;
 }
 
-.building-category {
-    margin-bottom: 20px;
+.menu-header button {
+    background: none;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px 10px;
+}
+
+.menu-header button:hover {
+    background-color: #f5f5f5;
 }
 
 .building-option {
@@ -110,6 +120,7 @@ body {
     padding: 10px;
     cursor: pointer;
     border-bottom: 1px solid #eee;
+    color: #333;
 }
 
 .building-option:hover {
@@ -125,6 +136,13 @@ body {
     margin-left: auto;
     color: #666;
     font-size: 0.9em;
+}
+
+.building-category h4 {
+    color: #333;
+    padding: 10px;
+    margin: 0;
+    border-bottom: 1px solid #eee;
 }
 
 
@@ -239,18 +257,17 @@ body {
 }
 
 .menu-header button {
-    background: none;
-    border: none;
-    color: #e0e0e0;
-    cursor: pointer;
-    font-size: 16px;
+    background: #4a4a4a;
+    border: 1px solid #666;
+    color: white;
     padding: 5px 10px;
-    border-radius: 5px;
-    transition: background-color 0.2s;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .menu-header button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background: #5a5a5a;
 }
 
 .building-category {
