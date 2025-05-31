@@ -2,128 +2,186 @@
 <html lang="sk">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Forge of Empires - Clone</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Forge of Empires</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Forge of Empires - offline hra vo vašom prehliadači." />
+
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png" />
+
+    <link href="assets/css/game.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript">
+        window.addEventListener("touchmove", function(event) {
+            event.preventDefault();
+        }, false);
+        if (typeof window.devicePixelRatio != 'undefined' && window.devicePixelRatio > 2) {
+            var meta = document.getElementById("viewport");
+            meta.setAttribute('content', 'width=device-width, initial-scale=' + (2 / window.devicePixelRatio) + ', user-scalable=no');
+        }
+    </script>
+
+    <script type="text/javascript">
+        if (window.addEventListener === undefined && window.attachEvent !== undefined) {
+            window.addEventListener = function addEventListener(event, callback) {
+                window.attachEvent('on' + event, callback);
+            };
+
+            window.removeEventListener = function removeEventListener(event, callback) {
+                window.detachEvent('on' + event, callback);
+            };
+        }
+    </script>
+
+    <script type="text/javascript" src="assets/js/3rd-party.js"></script>
+    <script type="text/javascript" src="assets/js/game.js"></script>
+
+    <style>
+        #support-button {
+            background: url('assets/images/page_btn_support.png');
+            border: none;
+            width: 204px;
+            height: 78px;
+            cursor: pointer;
+            position: absolute;
+            right: 148px;
+            top: 0px;
+            z-index: 200;
+            color: #f2dba9;
+            text-align: center;
+            padding-left: 35px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            font-size: 22px;
+        }
+        
+        #support-button:hover {
+            background-position-x: 1px;
+            background-position-y: -78px;
+        }
+        
+        #support-button:active {
+            background-position-x: 1px;
+            background-position-y: -156px;
+        }
+        
+        #minigame {
+            position: absolute;
+            display: block;
+            top: 51.45%;
+            left: 50.55%;
+            border: none;
+            pointer-events: auto;
+        }
+        
+        .minigame-window {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        
+        .minigame-no-window {
+            background-color: #000;
+            pointer-events: auto !important;
+            user-select: none;
+        }
+        
+        .guide {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+        
+        .paperScroll {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: url('assets/images/paper_scroll.png') no-repeat;
+            width: 600px;
+            height: 400px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .paperScrollTitle {
+            color: #f2dba9;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .paperScrollMessage {
+            color: #f2dba9;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        
+        .paperScrollButton {
+            display: inline-block;
+            background: #f2dba9;
+            color: #000;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
-<body>
-    <div id="game-container">
-        <!-- Horný panel -->
-        <div id="top-bar">
-            <div id="resources">
-                <div class="resource">
-                    <span class="icon">💰</span>
-                    <span id="gold">1000</span>
-                </div>
-                <div class="resource">
-                    <span class="icon">📦</span>
-                    <span id="supplies">500</span>
-                </div>
-                <div class="resource">
-                    <span class="icon">😊</span>
-                    <span id="happiness">100</span>
-                </div>
-                <div class="resource">
-                    <span class="icon">👥</span>
-                    <span id="population">20</span>
-                </div>
-            </div>
-            <div id="age-info">
-                <span id="current-age">Kamenná doba</span>
-                <div id="age-progress">
-                    <div id="progress-bar"></div>
+<body id="game_body">
+    <div id="container">
+        <div id="preloader" style="position: absolute; width: 100%; height: 100%; z-index: 120; background: #0E1E2D;">
+            <div><img src="assets/images/game/preload/PreloaderCompany.png" /></div>
+            <div><img id="spinner" src="assets/images/game/preload/Preloader.png" /></div>
+        </div>
+        <button id="support-button" onclick="goToSupportPage()">Podpora</button>
+        <div id="game-container" class="size0">
+            <div id="game-container-centered">
+                <div id="game-container-inner">
+                    <div id="openfl-content"></div>
+                    <div id="viewport-frame"></div>
+                    <img id="foe-logo" loading="lazy" src="assets/images/game/frame/performance_logo_foe.png" />
                 </div>
             </div>
         </div>
-
-        <!-- Hlavná herná plocha -->
-        <div id="game-area">
-            <div id="grid-container"></div>
-            <canvas id="game-canvas"></canvas>
-
-            <!-- Menu pre budovy -->
-            <div id="building-menu">
-                <div class="menu-header">
-                    <h3>Budovy</h3>
-                    <button id="toggle-menu">▼</button>
-                </div>
-                <div class="building-categories">
-                    <div class="building-category">
-                        <h4>Obytné budovy</h4>
-                        <div class="building-options">
-                            <div class="building-option" data-building="hut">
-                                <div class="building-icon">🏠</div>
-                                <span>Chatrč</span>
-                                <div class="cost">Z:50, Z:100</div>
-                            </div>
-                        </div>
+        <div id="imageContent" style="position: absolute; width: 100%; height: 100%; z-index: 150; background-color: rgba(10, 10, 10, 0.4); display: none;"></div>
+        <div id="minigameContent" style="position: absolute; width: 100%; height: 100%; z-index: 150; display: none; user-select: none; pointer-events: none;"></div>
+        <div class="guide">
+            <div class="paperScroll">
+                <div class="paperScrollContent">
+                    <p class="paperScrollTitle">
+                        Niečo sa pokazilo </p>
+                    <div class="paperScrollIcon">
+                        <img src="assets/images/icon_error.png" />
                     </div>
-                    <div class="building-category">
-                        <h4>Produkčné budovy</h4>
-                        <div class="building-options">
-                            <div class="building-option" data-building="hunter">
-                                <div class="building-icon">🏹</div>
-                                <span>Lovecká chatka</span>
-                                <div class="cost">Z:100, Z:150</div>
-                            </div>
-                            <div class="building-option" data-building="farm">
-                                <div class="building-icon">🌾</div>
-                                <span>Farma</span>
-                                <div class="cost">Z:150, Z:200</div>
-                            </div>
-                            <div class="building-option" data-building="pottery">
-                                <div class="building-icon">🏺</div>
-                                <span>Hrnčiarska dielňa</span>
-                                <div class="cost">Z:200, Z:250</div>
-                            </div>
-                            <div class="building-option" data-building="mine">
-                                <div class="building-icon">⛏️</div>
-                                <span>Baňa</span>
-                                <div class="cost">Z:250, Z:300</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="building-category">
-                        <h4>Vojenské budovy</h4>
-                        <div class="building-options">
-                            <div class="building-option" data-building="barracks">
-                                <div class="building-icon">⚔️</div>
-                                <span>Kasárne</span>
-                                <div class="cost">Z:300, Z:400</div>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="paperScrollMessage">
+                        Hru sa nepodarilo správne načítať. Skúste hru načítať znovu!
+                    </p>
+                    <a href="." class="paperScrollButton">Znova načítať hru</a>
                 </div>
-            </div>
-        </div>
-
-        <!-- Spodný panel -->
-        <div id="bottom-bar">
-            <div id="research">
-                <div class="panel-header">
-                    <h3>Výskum</h3>
-                    <button id="toggle-research">▼</button>
-                </div>
-                <div id="research-tree" class="hidden"></div>
-            </div>
-            <div id="quests">
-                <div class="panel-header">
-                    <h3>Úlohy</h3>
-                    <button id="toggle-quests">▼</button>
-                </div>
-                <div id="quest-list" class="hidden"></div>
             </div>
         </div>
     </div>
 
-    <!-- Scripty -->
-    <script src="js/resources.js"></script>
-    <script src="js/buildings.js"></script>
-    <script src="js/research.js"></script>
-    <script src="js/quests.js"></script>
-    <script src="js/units.js"></script>
-    <script src="js/game.js"></script>
+    <script type="text/javascript">
+        // Základné funkcie pre offline režim
+        function goToSupportPage() {
+            alert('Offline režim - podpora nie je dostupná');
+        }
+
+        function initGame() {
+            // Tu bude inicializácia hry
+            console.log('Hra sa inicializuje...');
+        }
+
+        // Načítanie hry po načítaní stránky
+        window.addEventListener('load', function() {
+            initGame();
+        });
+    </script>
 </body>
 
 </html>

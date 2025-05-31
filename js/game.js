@@ -1,6 +1,10 @@
+// Inicializácia hry
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Inicializujem hru...');
+
+    // Vytvorenie mriežky
     const gridContainer = document.getElementById('grid-container');
-    const gameCanvas = document.getElementById('game-canvas');
+    console.log('Grid container:', gridContainer);
 
     // Vytvorenie mriežky 20x20
     for (let i = 0; i < 400; i++) {
@@ -10,8 +14,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Vytvorenie radnice v strede (5x5)
-    const centerX = 7; // Začiatok radnice v X smere (20/2 - 5/2)
-    const centerY = 7; // Začiatok radnice v Y smere (20/2 - 5/2)
+    const centerX = 7;
+    const centerY = 7;
 
     for (let y = centerY; y < centerY + 5; y++) {
         for (let x = centerX; x < centerX + 5; x++) {
@@ -28,19 +32,20 @@ document.addEventListener('DOMContentLoaded', function() {
     label.textContent = 'Radnica';
     centerCell.appendChild(label);
 
+    // Inicializácia canvasu
+    const gameCanvas = document.getElementById('game-canvas');
+    console.log('Game canvas:', gameCanvas);
+
     // Nastavenie veľkosti canvasu
     function resizeCanvas() {
         gameCanvas.width = gridContainer.offsetWidth;
         gameCanvas.height = gridContainer.offsetHeight;
     }
-
-    // Inicializácia veľkosti canvasu
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Pridanie event listenerov pre canvas
-    gameCanvas.addEventListener('mousemove', handleMouseMove);
-    gameCanvas.addEventListener('click', handleClick);
+    // Inicializácia stavebného systému
+    initBuildingSystem();
 });
 
 // Funkcie pre správu udalostí myši
